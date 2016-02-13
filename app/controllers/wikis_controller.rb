@@ -1,12 +1,15 @@
 class WikisController < ApplicationController
+  # before_filter :authenticate_user!
+  # before_filter :admin_only, :only => :destroy
 
   def index
     @wikis = Wiki.all
+    @user = current_user
   end
 
   def create
     @wiki = Wiki.new(wiki_params)
-
+    authorize @wiki
     if @wiki.save
       redirect_to @wiki, notice: "Wiki was created successfully."
     else
@@ -17,19 +20,23 @@ class WikisController < ApplicationController
 
   def new
     @wiki = Wiki.new
+    authorize @wiki
   end
 
   def edit
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
   end
 
   def show
     @wiki = Wiki.find(params[:id])
+    @user = current_user
   end
 
   def update
     @wiki = Wiki.find(params[:id])
     @wiki.assign_attributes(wiki_params)
+    authorize @wiki
 
     if @wiki.save
       flash[:notice] = "Wiki was updated."
@@ -42,7 +49,7 @@ class WikisController < ApplicationController
 
   def destroy
     @wiki = Wiki.find(params[:id])
-
+    authorize @wiki
     if @wiki.destroy
       flash[:notice] = "\"#{@wiki.title}\" was deleted successfully."
       redirect_to action: :index
@@ -50,9 +57,23 @@ class WikisController < ApplicationController
       flash.now[:alert] = "There was an error deleting the topic."
       render :show
     end
+    # @wiki = Wiki.find(params[:id])
+    #
+    # if @wiki.destroy
+    #   flash[:notice] = "\"#{@wiki.title}\" was deleted successfully."
+    #   redirect_to action: :index
+    # else
+    #   flash.now[:alert] = "There was an error deleting the topic."
+    #   render :show
+    # end
   end
 
   private
+  # def admin_only
+  #   unless current_user.admin?
+  #     redirect_to action: :show, :alert => "Access denied."
+  #   end
+  # end
 
   def wiki_params
     params.require(:wiki).permit(:title, :body, :private)
