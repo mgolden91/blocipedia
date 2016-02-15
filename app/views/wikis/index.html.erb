@@ -4,3 +4,4 @@
 <%= link_to "Edit", edit_wiki_path(f) , class: 'btn btn-success' %>
 <%= link_to "Delete Wiki", wiki_path(f), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to delete this post?' } %>
 <% end %>
+<h1><%= flash[:notice] %></h1>

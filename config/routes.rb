@@ -1,23 +1,15 @@
 Rails.application.routes.draw do
-  get 'wikis/index'
 
-  get 'wikis/create'
-
-  get 'wikis/new'
-
-  get 'wikis/edit'
-
-  get 'wikis/show'
-
-  get 'wikis/update'
-
-  get 'wikis/destroy'
 
   devise_for :users
   get 'welcome/index'
   get 'welcome/about'
+  get '/welcome' => "users#show", as: :user_root
   root 'welcome#index'
+  resources :users
+  put 'user/downgrade' => "users#downgrade"
   resources :wikis
+  resources :charges, only: [:new, :create]
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

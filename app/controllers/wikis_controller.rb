@@ -20,6 +20,7 @@ class WikisController < ApplicationController
 
   def new
     @wiki = Wiki.new
+    @user = current_user
     authorize @wiki
   end
 
