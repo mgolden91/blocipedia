@@ -6,3 +6,12 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 User.create!(:email => "member@example.com", :role => "admin", :password => "helloworld", :password_confirmation => "helloworld", :username => "blocmentor")
+User.create!(:email => "mgolden91@gmail.com", :role => "standard", :password => "helloworld", :password_confirmation => "helloworld", :username => "mattyg" )
+
+5.times do
+  Wiki.create!(
+    :title => Faker::Lorem.sentence,
+    :user_id => "1",
+    :body => Faker::Lorem.paragraph
+    )
+end
