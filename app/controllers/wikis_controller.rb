@@ -3,13 +3,17 @@ class WikisController < ApplicationController
   # before_filter :admin_only, :only => :destroy
 
   def index
-    @wikis = Wiki.all
+    @wikis = Wiki.visible_to(current_user)
     @user = current_user
   end
 
   def create
     @wiki = Wiki.new(wiki_params)
+    @wiki.user = current_user
     authorize @wiki
+    if @wiki.private == nil
+      @wiki.private = false
+    end
     if @wiki.save
       redirect_to @wiki, notice: "Wiki was created successfully."
     else
@@ -31,7 +35,11 @@ class WikisController < ApplicationController
 
   def show
     @wiki = Wiki.find(params[:id])
-    @user = current_user
+
+    unless @wiki.private == false || current_user.role != "standard"
+      flash[:alert] = "You must be signed in to view private wikis"
+      redirect_to action: :index
+    end
   end
 
   def update

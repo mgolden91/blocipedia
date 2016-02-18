@@ -12,6 +12,16 @@ User.create!(:email => "testing@testing.com", :role => "standard", :password => 
   Wiki.create!(
     :title => Faker::Lorem.sentence,
     :user_id => "1",
-    :body => Faker::Lorem.paragraph
+    :body => Faker::Lorem.paragraph,
+    :private => false
+    )
+end
+
+1.times do
+  Wiki.create!(
+    :title => "Private",
+    :user_id => "1",
+    :body => "This is a private wiki",
+    :private => true
     )
 end

@@ -6,6 +6,13 @@ class UsersController < ApplicationController
   def downgrade
     @user = current_user
     @user.role = "standard"
+    @wikidgrade = Wiki.all
+    @wikidgrade.each do |f|
+      if f.user_id == @user.id
+        f.private = false
+        f.save!
+      end
+    end
     if @user.save!
       flash[:notice] = "Successfully downgraded account"
     else
@@ -21,5 +28,4 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
   end
-
 end
