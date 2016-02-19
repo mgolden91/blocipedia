@@ -2,7 +2,7 @@
 <h1><%= flash[:alert] %></h1>
 <% @wikis.each do |f| %>
 <h1><%= link_to f.title, wiki_path(f) %></h1>
-<p><%= f.body %></p>
+<p><%= markdown(f.body) %></p>
 <%= link_to "Edit", edit_wiki_path(f) , class: 'btn btn-success' %>
 <%= link_to "Delete Wiki", wiki_path(f), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to delete this post?' } %>
 <% end %>
