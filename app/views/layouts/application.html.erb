@@ -1,31 +1,53 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Blocipedia</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-  <div class="container">
-    <ul class="nav nav-tabs">
-      <li><%= link_to "Bloccit", welcome_index_path %></li>
-      <li><%= link_to "About", welcome_about_path %></li>
-      <li><%= link_to "New Wiki", new_wiki_path %></li>
-      <li><%= link_to "All Wikis", wikis_path %></li>
-    </ul>
-    <ul class="nav nav-tabs pull-right">
-    <% if user_signed_in? %>
-      Signed in as: <strong><%= current_user.username %></strong> |
-      <%= link_to 'My Profile', user_path(current_user), :class => 'navbar-link' %> - <%= link_to "Sign Out", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-    <% else %>
-      <%= link_to "Sign Up", new_user_registration_path, :class => 'navbar-link'  %> -
-      <%= link_to "Sign In", new_user_session_path, :class => 'navbar-link'  %>
-    <% end %>
-    </ul>
-  <%= yield %>
-  </div>
 
-</body>
+  <head>
+    <title>Blocipedia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span2">
+            <%= image_tag("Blocipedialogofinal.png",width: '256', height: '256', alt: 'Site Logo', class: "logo")%>
+          <div class="navbar">
+            <ul>
+              <li><%= link_to "Bloccit", welcome_index_path %></li>
+              <li><%= link_to "About", welcome_about_path %></li>
+              <li><%= link_to "New Wiki", new_wiki_path %></li>
+              <li><%= link_to "All Wikis", wikis_path %></li>
+            </ul>
+          </div>
+        </div>
+        <div class="span10">
+          <div class="title">
+              <h1>Blocipedia</h1><h2>: You decide the rest.</h2>
+          </div>
+          <div class="signin">
+              <ul>
+              <h2>Get Started!</h2>
+              <% if user_signed_in? %>
+                Signed in as: <strong><%= current_user.username %></strong> |
+                <%= link_to 'My Profile', user_path(current_user), :class => 'navbar-link' %> - <%= link_to "Sign Out", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+              <% else %>
+                <%= link_to "Sign Up", new_user_registration_path, :class => 'navbar-link'  %> -
+                <%= link_to "Sign In", new_user_session_path, :class => 'navbar-link'  %>
+              <% end %>
+
+              </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mainbody">
+        <%= yield %>
+    </div>
+
+  </body>
+
 </html>

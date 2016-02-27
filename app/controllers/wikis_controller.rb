@@ -3,7 +3,8 @@ class WikisController < ApplicationController
   # before_filter :admin_only, :only => :destroy
 
   def index
-    @wikis = Wiki.visible_to(current_user)
+    @wikis = policy_scope(Wiki)
+    # @wikis = Wiki.visible_to(current_user)
     @user = current_user
   end
 
@@ -35,11 +36,11 @@ class WikisController < ApplicationController
 
   def show
     @wiki = Wiki.find(params[:id])
-
-    unless @wiki.private == false || current_user.role != "standard"
-      flash[:alert] = "You must be signed in to view private wikis"
-      redirect_to action: :index
-    end
+    authorize @wiki
+    # unless @wiki.private == false || current_user.role != "standard"
+    #   flash[:alert] = "You must be signed in to view private wikis"
+    #   redirect_to action: :index
+    # end
   end
 
   def update
@@ -66,15 +67,6 @@ class WikisController < ApplicationController
       flash.now[:alert] = "There was an error deleting the topic."
       render :show
     end
-    # @wiki = Wiki.find(params[:id])
-    #
-    # if @wiki.destroy
-    #   flash[:notice] = "\"#{@wiki.title}\" was deleted successfully."
-    #   redirect_to action: :index
-    # else
-    #   flash.now[:alert] = "There was an error deleting the topic."
-    #   render :show
-    # end
   end
 
   private
@@ -87,4 +79,5 @@ class WikisController < ApplicationController
   def wiki_params
     params.require(:wiki).permit(:title, :body, :private)
   end
+
 end

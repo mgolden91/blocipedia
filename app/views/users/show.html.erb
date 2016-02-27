@@ -2,6 +2,24 @@
 <h1><%= @user.email %></h1>
 <h1><%= @user.username %></h1>
 <h1><%= @user.role %></h1>
+<h1><%= @user.id %></h1>
+<div>
+  <h1>Wikis you are the creator of</h1>
+    <% @wikiowner.each do |wikiowner| %>
+      <ul>
+        <li><%= link_to "#{wikiowner.title}", wiki_path(wikiowner), class: "ui-button-text button_text" %></li>
+      </ul>
+    <% end %>
+</div>
+
+<div>
+  <h1>Wikis you are a collaborator on</h1>
+    <% @user.collaborators.each do |wikicollaborator| %>
+        <ul>
+          <li><%= link_to "#{wikicollaborator.wiki.title}", wiki_path(wikicollaborator), class: "ui-button-text button_text" %></li>
+        </ul>
+    <% end %>
+</div>
 
 <p><a class="btn btn-success btn-lg" href="/users/edit" role="button">Edit Profile</a></p>
 

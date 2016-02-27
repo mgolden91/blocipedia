@@ -1,8 +1,16 @@
 
 <h1><%= @wiki.title %></h1>
 <p><%= markdown (@wiki.body) %></p>
+<h4>owner of wiki</h4>
+<%= User.find(@wiki.user_id).username %>
+<h4>list of collaborators on this wiki</h4>
+<p><%= @wiki.collaborators.collect{|u| u.user.username} %></p>
 <%= link_to "Edit", edit_wiki_path(@wiki) , class: 'btn btn-success' %>
 <%= link_to "Back", wikis_path, class: 'btn btn-warning' %>
 <%= link_to "Delete Wiki", wiki_path(@wiki), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to delete this post?' } %>
 
+<% if current_user == nil %>
+<% elsif (@wiki.user_id == current_user.id) && (@wiki.collaborators.count != (User.all.count - 1)) %>
+  <%= link_to "Add Collaborator", new_wiki_collaborator_path(@wiki), class: 'btn btn-success' %>
+<% end %>
 <h1><%= flash[:notice] %></h1>

@@ -1,3 +1,19 @@
 <h1>Wikis#edit</h1>
 <p>Find me in app/views/wikis/edit.html.erb</p>
 <%= render "form" %>
+<div>
+  <div>
+    <h5>Collaborators</h5>
+    <p><%= @wiki.collaborators.collect{|u| u.user.username}%></p>
+  </div>
+  <% if @wiki.user_id == current_user.id %>
+      <%= link_to "Add Collaborator", new_wiki_collaborator_path(@wiki), class: 'btn btn-success' %>
+    <div>
+      <% @wiki.collaborators.each do |collaborator| %>
+        <ul>
+          <li><%= link_to "Delete #{collaborator.user.username}", wiki_collaborator_path(@wiki, collaborator), method: :delete, class: "ui-button-text button_text" %></li>
+        </ul>
+      <% end %>
+    </div>
+  <% end %>
+</div>

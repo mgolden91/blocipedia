@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   def show
     @user = current_user
+    @wikis = Wiki.all
+    @wikiowner = @wikis.where(user_id: current_user.id)
   end
 
   def downgrade

@@ -11,7 +11,7 @@ class ApplicationPolicy
   end
 
   def show?
-    scope.where(:id => record.id).exists?
+    !wiki.private? || wiki.user_id == user.id || wiki.users.include?(user)
   end
 
   def create?
@@ -27,7 +27,7 @@ class ApplicationPolicy
   end
 
   def edit?
-    user.present?
+    user && (wiki.user_id == user.id || wiki.users.include?(user) || !wiki.private?)
   end
 
   def destroy?

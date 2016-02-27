@@ -1,0 +1,10 @@
+<h4>Add a Collaborator</h4>
+<div class="col-md-8">
+  <%= form_for [@wiki, @collaborator] do |f| %>
+      <div class="form-group">
+        <%= f.label :user_id %>
+        <%= collection_select(:collaborator, :user_id, @selectcollaborator, :id, :username, include_blank: true)%>
+      </div>
+      <%= f.submit "Save", class: 'btn btn-success' %>
+  <% end %>
+</div>

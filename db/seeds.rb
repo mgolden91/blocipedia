@@ -8,6 +8,9 @@
 User.create!(:email => "member@example.com", :role => "admin", :password => "helloworld", :password_confirmation => "helloworld", :username => "blocmentor")
 User.create!(:email => "mgolden91@gmail.com", :role => "premium", :password => "helloworld", :password_confirmation => "helloworld", :username => "mattyg" )
 User.create!(:email => "testing@testing.com", :role => "standard", :password => "helloworld", :password_confirmation => "helloworld", :username => "testing")
+
+Collaborator.create!(:id => "1", :user_id => "2", :wiki_id => "1")
+
 5.times do
   Wiki.create!(
     :title => Faker::Lorem.sentence,
